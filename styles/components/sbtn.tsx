@@ -17,6 +17,7 @@ export const StyleBtn = css`
 `
 export const StylePrimaryBtn = css`
   ${StyleBtn}
+  width: 150px;
   background-color: #527FC2;
 `
 export const StyleDangerBtn = css`

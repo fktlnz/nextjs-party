@@ -9,8 +9,8 @@ exports.questionsAll = async (req, res) => {
     .from('questions') // from 'questions' table
     .then((userData) => {
       // Send questions extracted from database in response
-      console.log('userData')
-      console.log(userData)
+      // console.log('userData')
+      // console.log(userData)
       return res.json(userData);
     })
     .catch((err) => {
@@ -28,8 +28,8 @@ exports.questionsSelect = async (req, res) => {
     .from('questions') // from 'questions' table
     .then((userData) => {
       // Send questions extracted from database in response
-      console.log('userData')
-      console.log(userData)
+      // console.log('userData')
+      // console.log(userData)
       return res.json(userData);
     })
     .catch((err) => {

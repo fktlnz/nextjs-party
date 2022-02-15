@@ -5,6 +5,7 @@ export const Container = css`
     width:80%;
     margin: 0 auto;
     padding: 20px 0;
+    height: 100vh;
 `
 
 export const TitleWrap = css`
@@ -34,6 +35,10 @@ export const CardsWrap = css`
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+`
+
+export const CorrectShadow = css`
+    box-shadow: 0 0 0 10px red;
 `
 
 export const CardWrap = css`

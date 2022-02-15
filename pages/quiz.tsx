@@ -6,6 +6,8 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Footer from '../components/footer'
+// Socket
+import useSocket from '../service/useSocket'
 // Styles
 import * as style_quiz from '../styles/project/quiz'
 import * as style_utility from '../styles/utility/utility'
@@ -68,15 +70,16 @@ const Home:NextPage = () => {
         answer:""
     })
     //0(default), 1(display title), 2(display selection), 3(answer check), 4(display answer)
-    const [step, setStep] = useState(0);
+    const {id, step, sendStep} = useSocket();
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
-        // websocketから取得するようにする
-        const pid = 6
-        
-        if(question.id == -1){
-            getQuestionById(pid)
+
+        if(step==0){
+
+        }else if(step==1) {
+            console.log('display title');
+            getQuestionById(id)
             .then(question => {
                 console.log('question data!!:', question);
                 setQuestion(question)
@@ -84,24 +87,18 @@ const Home:NextPage = () => {
             .catch((error) => {
                 console.error('get question error!!:', error);
             });
-        }else{
-            if(step==0){
-
-            }else if(step==1) {
-                console.log('display title');
-            }else if(step==2) {
-                console.log('display selection');
-            }else if(step==3) {
-                console.log('answer check');
-            }else if(step==4) {
-                console.log('display answer')
-
-            }
+        }else if(step==2) {
+            console.log('display selection');
+        }else if(step==3) {
+            console.log('answer check');
+        }else if(step==4) {
+            console.log('display answer');
+        }else if(step==5) {
+            console.log('display end');
         }
 
-
         
-    },[step]);
+    },[id, step]);
     // 問題新規保存
     const saveQuestion = async (input:IFormInputs) => {
         const data = {
@@ -185,19 +182,6 @@ const Home:NextPage = () => {
         return question.shift();
     }
 
-    const displayTitle = () => {
-        setStep(1)
-
-    }
-    const displaySelection = () => {
-        setStep(2)
-
-    }
-    const displayAnswerCheck = () => {
-        setStep(3)
-
-    }
-
     const DisplaySelect:React.VFC<PropsDisplaySelect>= (props) => {
         if(props.hasImg) {
             return(
@@ -218,9 +202,6 @@ const Home:NextPage = () => {
         </Head>
 
         <main css={style_quiz.Container}>
-            <button onClick={() => displayTitle()}>display title</button>
-            <button onClick={() => displaySelection()}>display selection</button>
-            <button onClick={() => displayAnswerCheck()}>display answer check</button>
             <section css={(step>=1) ? [style_quiz.TitleWrap, style_utility.mb20]:style_utility.display_none}>
                 <ul>
                     <li css={style_quiz.TitleLabel}>Q</li>
@@ -228,7 +209,7 @@ const Home:NextPage = () => {
                 </ul>
             </section>
             <section css={(step>=2) ? style_quiz.CardsWrap : style_utility.display_none}>
-                <div className="border-primary" css={[style_quiz.CardWrap, style_utility.mb30]}>
+                <div className="border-primary" css={(step>=4 && question.answer=="1") ? [style_quiz.CardWrap, style_utility.mb30, style_quiz.CorrectShadow]:[style_quiz.CardWrap, style_utility.mb30]}>
                     <div css={style_quiz.CardTop}>
                         <DisplaySelect hasImg={(question.select1_imgpath!="")} imgPath={question.select1_imgpath} text={question.select1_text}/>
                     </div>
@@ -237,7 +218,7 @@ const Home:NextPage = () => {
                         <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>10</span>
                     </div>
                 </div>
-                <div className="border-danger" css={[style_quiz.CardWrap, style_utility.mb30]}>
+                <div className="border-danger" css={(step>=4 && question.answer=="2") ? [style_quiz.CardWrap, style_utility.mb30, style_quiz.CorrectShadow]:[style_quiz.CardWrap, style_utility.mb30]}>
                     <div css={style_quiz.CardTop}>
                     <DisplaySelect hasImg={(question.select2_imgpath!="")} imgPath={question.select2_imgpath} text={question.select2_text}/>
                     </div>
@@ -246,7 +227,7 @@ const Home:NextPage = () => {
                         <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>10</span>
                     </div>
                 </div>
-                <div className="border-success" css={style_quiz.CardWrap}>
+                <div className="border-success" css={(step>=4 && question.answer=="3") ? [style_quiz.CardWrap, style_utility.mb30, style_quiz.CorrectShadow]:[style_quiz.CardWrap, style_utility.mb30]}>
                     <div css={style_quiz.CardTop}>
                     <DisplaySelect hasImg={(question.select3_imgpath!="")} imgPath={question.select3_imgpath} text={question.select3_text}/>
                     </div>
@@ -255,7 +236,7 @@ const Home:NextPage = () => {
                         <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>10</span>
                     </div>
                 </div>
-                <div className="border-warning" css={style_quiz.CardWrap}>
+                <div className="border-warning" css={(step>=4 && question.answer=="4") ? [style_quiz.CardWrap, style_utility.mb30, style_quiz.CorrectShadow]:[style_quiz.CardWrap, style_utility.mb30]}>
                     <div css={style_quiz.CardTop}>
                     <DisplaySelect hasImg={(question.select4_imgpath!="")} imgPath={question.select4_imgpath} text={question.select4_text}/>
                     </div>
@@ -271,7 +252,6 @@ const Home:NextPage = () => {
             
             
         </main>
-        <Footer></Footer>
 
         <style jsx>{`
             .reset-table {

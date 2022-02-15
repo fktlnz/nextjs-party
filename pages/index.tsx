@@ -7,7 +7,7 @@ export default function Upload() {
     const formData = new FormData();
 
     Object.entries({ ...fields, file }).forEach(([key, value]) => {
-      formData.append(key, value);
+      // formData.append(key, value);
     });
 
     const upload = await fetch(url, {

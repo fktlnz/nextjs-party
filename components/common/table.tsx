@@ -79,7 +79,7 @@ export default function BasicTable(props:TableDatas) {
               }}
               >
               <TableCell>
-                  <label><input onChange={(e) => props.onChangeRadio(e)} type="radio" name="radio-name" value={row.id} /><span></span></label>
+                  <label><input onChange={(e) => props.onChangeRadio(e)} type="radio" name="radio-name" value={index} /><span></span></label>
               </TableCell>
               <TableCell component="th" scope="row">
                 {row.question}
