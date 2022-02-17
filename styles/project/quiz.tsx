@@ -6,6 +6,7 @@ export const Container = css`
     margin: 0 auto;
     padding: 20px 0;
     height: 100vh;
+    position: relative;
 `
 
 export const TitleWrap = css`
@@ -42,7 +43,7 @@ export const CorrectShadow = css`
 `
 
 export const CardWrap = css`
-    width: 45%;
+    width: 49%;
     border-radius: 20px;
 `
 
@@ -89,4 +90,23 @@ export const CardBottomCount = css`
     border-radius: 20px;
     text-align: center;
     font-size: 27px;
+`
+
+export const TimeCountWrap = css`
+    position: absolute;
+    bottom: 10px;
+    right: -60px;
+`
+export const TimeCount = css`
+    border: 4px solid #C25252;
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px #fefefe;
+    color: #fff;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    background-color: red;
+    font-size: 40px;
+    text-align: center;
+    line-height: 50px;
 `

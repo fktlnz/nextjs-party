@@ -6,8 +6,9 @@ import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Footer from '../components/footer'
-// Socket
+// service
 import useSocket from '../service/useSocket'
+import useCount from '../service/useCount'
 // Styles
 import * as style_quiz from '../styles/project/quiz'
 import * as style_utility from '../styles/utility/utility'
@@ -71,6 +72,7 @@ const Home:NextPage = () => {
     })
     //0(default), 1(display title), 2(display selection), 3(answer check), 4(display answer)
     const {id, step, sendStep} = useSocket();
+    const {count, startCount} = useCount();
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
@@ -89,6 +91,8 @@ const Home:NextPage = () => {
             });
         }else if(step==2) {
             console.log('display selection');
+            //カウント開始
+            startCount(18, 8, "up");
         }else if(step==3) {
             console.log('answer check');
         }else if(step==4) {
@@ -244,6 +248,9 @@ const Home:NextPage = () => {
                         <span className="bg-warning" css={style_quiz.CardBottomLabel}>D</span>
                         <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>10</span>
                     </div>
+                </div>
+                <div css={style_quiz.TimeCountWrap}>
+                    <span css={style_quiz.TimeCount}>{count}</span>
                 </div>
                 
             </section>
