@@ -2,8 +2,8 @@
 const path = require('path')
 
 // Get the location of database.sqlite file
-const dbPath = path.resolve('/Users/fx30296/Documents/study/nextjs/next-party/server/db/database.sqlite')
-console.log('dir:'+__dirname)
+const dbPath = path.resolve('server/db/database.sqlite')
+console.log('dir:'+dbPath)
 // Create connection to SQLite database
 const knex = require('knex')({
   client: 'sqlite3',
