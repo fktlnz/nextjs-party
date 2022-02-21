@@ -94,8 +94,7 @@ export const CardBottomCount = css`
 
 export const TimeCountWrap = css`
     position: absolute;
-    bottom: 10px;
-    right: -60px;
+    right: 0;
 `
 export const TimeCount = css`
     border: 4px solid #C25252;

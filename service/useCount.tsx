@@ -44,7 +44,7 @@ const useCount = () => {
             return () => clearTimeout(id);
         }
         return;
-    });
+    },[count]);
 
     const setStart = (upLimit:number, downLimit:number, direction:string) => {
         const start = (direction=="up") ? downLimit : upLimit;
