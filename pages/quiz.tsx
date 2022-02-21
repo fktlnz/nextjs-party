@@ -1,18 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import React, {useState, useEffect} from "react";
-import { useRouter } from 'next/router'
-import type { NextPage } from 'next'
-import { GetServerSideProps } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import Footer from '../components/footer'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
 // service
-import useSocket from '../service/useSocket'
-import useCount from '../service/useCount'
+import useSocket from '../service/useSocket';
+import useCount from '../service/useCount';
 // Styles
-import * as style_quiz from '../styles/project/quiz'
-import * as style_utility from '../styles/utility/utility'
-import * as style_btn from '../styles/components/sbtn'
+import * as style_quiz from '../styles/project/quiz';
+import * as style_utility from '../styles/utility/utility';
+// Sound
+import useSound from 'use-sound';
 
 type TableData = {
     id:number,
@@ -54,9 +52,18 @@ type PropsDisplaySelect = {
     text: string
 }
 
+const DisplaySelect:React.VFC<PropsDisplaySelect>= (props) => {
+    if(props.hasImg) {
+        return(
+            <Image src={props.imgPath} layout="fill" objectFit="contain" />
+        )
+    }
+    return (
+        <h2>{props.text}</h2>
+    )
+}
+
 const Home:NextPage = () => {
-    const [hasError, setHasError] = useState<boolean>(false);
-    const [row, setRow] = React.useState("0")
     const [question, setQuestion] = React.useState<TableData>({
         id:-1,
         question:"",
@@ -73,6 +80,7 @@ const Home:NextPage = () => {
     //0(default), 1(display title), 2(display selection), 3(answer check), 4(display answer)
     const {id, step, sendStep} = useSocket();
     const {count, startCount} = useCount();
+    const [playSoundTitle] = useSound('/sounds/sound_title.mp3');
 
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
@@ -81,6 +89,7 @@ const Home:NextPage = () => {
 
         }else if(step==1) {
             console.log('display title');
+            playSoundTitle()
             getQuestionById(id)
             .then(question => {
                 console.log('question data!!:', question);
@@ -92,7 +101,7 @@ const Home:NextPage = () => {
         }else if(step==2) {
             console.log('display selection');
             //カウント開始
-            startCount(18, 8, "up");
+            startCount(10, 0, "down");
         }else if(step==3) {
             console.log('answer check');
         }else if(step==4) {
@@ -166,11 +175,6 @@ const Home:NextPage = () => {
 
     }
 
-    const onChangeRadio = (e:React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.value)
-        setRow(e.target.value)
-    }
-
     const getQuestionById = async (id: number) => {
         const data = {
             id: id,
@@ -184,17 +188,6 @@ const Home:NextPage = () => {
         });
         const question = await res.json();
         return question.shift();
-    }
-
-    const DisplaySelect:React.VFC<PropsDisplaySelect>= (props) => {
-        if(props.hasImg) {
-            return(
-                <Image src={props.imgPath} layout="fill" objectFit="contain" />
-            )
-        }
-        return (
-            <h2>{props.text}</h2>
-        )
     }
 
     return (
@@ -231,7 +224,7 @@ const Home:NextPage = () => {
                         <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>10</span>
                     </div>
                 </div>
-                <div className="border-success" css={(step>=4 && question.answer=="3") ? [style_quiz.CardWrap, style_utility.mb30, style_quiz.CorrectShadow]:[style_quiz.CardWrap, style_utility.mb30]}>
+                <div className="border-success" css={(step>=4 && question.answer=="3") ? [style_quiz.CardWrap, style_utility.mb10, style_quiz.CorrectShadow]:[style_quiz.CardWrap, style_utility.mb10]}>
                     <div css={style_quiz.CardTop}>
                     <DisplaySelect hasImg={(question.select3_imgpath!="")} imgPath={question.select3_imgpath} text={question.select3_text}/>
                     </div>
@@ -240,7 +233,7 @@ const Home:NextPage = () => {
                         <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>10</span>
                     </div>
                 </div>
-                <div className="border-warning" css={(step>=4 && question.answer=="4") ? [style_quiz.CardWrap, style_utility.mb30, style_quiz.CorrectShadow]:[style_quiz.CardWrap, style_utility.mb30]}>
+                <div className="border-warning" css={(step>=4 && question.answer=="4") ? [style_quiz.CardWrap, style_utility.mb10, style_quiz.CorrectShadow]:[style_quiz.CardWrap, style_utility.mb10]}>
                     <div css={style_quiz.CardTop}>
                     <DisplaySelect hasImg={(question.select4_imgpath!="")} imgPath={question.select4_imgpath} text={question.select4_text}/>
                     </div>
@@ -249,11 +242,11 @@ const Home:NextPage = () => {
                         <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>10</span>
                     </div>
                 </div>
-                <div css={style_quiz.TimeCountWrap}>
-                    <span css={style_quiz.TimeCount}>{count}</span>
-                </div>
                 
             </section>
+            <div css={(step>=2) ? style_quiz.TimeCountWrap : style_utility.display_none}>
+                <span css={style_quiz.TimeCount}>{count}</span>
+            </div>
             
             
             
@@ -305,28 +298,5 @@ const Home:NextPage = () => {
         </div>
     )
 }
-
-// This gets called on every request
-// export const getServerSideProps:GetServerSideProps = async (context) => {
-//     // Fetch data from external API
-//     const param = {
-//         id: 1,
-//     }
-
-//     const res = await fetch(`http://127.0.0.1:3000/api/questions/select`, {
-//         method: 'POST', // or 'PUT'
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(param),
-//     });
-
-//     const data = await res.json();
-  
-//     console.log('serversideprops:')
-//     console.log(data)
-//     // Pass data to the page via props
-//     return { props: { data } }
-//   }
 
 export default Home
