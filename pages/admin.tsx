@@ -365,10 +365,30 @@ const Home:NextPage = ({data}:any) => {
 export const getServerSideProps:GetServerSideProps = async (context) => {
   // Fetch data from external API
   const res = await fetch(`http://127.0.0.1:3000/api/questions/all`)
-  const data = await res.json()
+  const rtn = await res.json()
 
   console.log('serversideprops:')
-  console.log(data)
+  console.log(rtn)
+  let data;
+  if("message" in rtn) {
+      console.log('No Database');
+      data = [{
+        id:0,
+        question:"",
+        select1_text:"",
+        select1_imgpath:"",
+        select2_text:"",
+        select2_imgpath:"",
+        select3_text:"",
+        select3_imgpath:"",
+        select4_text:"",
+        select4_imgpath:"",
+        answer:""
+      }]
+
+  }else{
+      data = rtn
+  }
   // Pass data to the page via props
   return { props: { data } }
 }
