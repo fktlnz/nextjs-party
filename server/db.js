@@ -13,7 +13,7 @@ const knex = require('knex')({
   useNullAsDefault: true
 })
 
-// Create a table in the database called "books"
+// Create a table in the database called "questions"
 knex.schema
   // Make sure no "books" table exists
   // before trying to create new
@@ -56,10 +56,10 @@ knex.schema
     })
 
 // Just for debugging purposes:
-// Log all data in "books" table
-// knex.select('*').from('questions')
-//   .then(data => console.log('data:', data))
-//   .catch(err => console.log(err))
+// Log all data in "questions" table
+knex.select('*').from('questions')
+  .then(data => console.log('data:', data))
+  .catch(err => console.log(err))
 
 // Export the database
 module.exports = knex

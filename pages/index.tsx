@@ -2,6 +2,8 @@
 import React, {useState, useEffect} from "react";
 import type { NextPage } from 'next';
 import Head from 'next/head';
+// service
+import useSocket from '../service/useSocket';
 // Styles
 import * as style_index from '../styles/project/index';
 import * as style_quiz from '../styles/project/quiz';
@@ -9,6 +11,51 @@ import * as style_utility from '../styles/utility/utility'
 import * as style_btn from '../styles/components/sbtn'
 
 const Home:NextPage = () => {
+
+  const {id, step} = useSocket();
+  const [questionText, setQuestionText] = useState<string>("");
+
+  useEffect(() => {
+
+    if(step==0){
+      setQuestionText("問題発表までおまちください・・");
+    }else if(step==1) {
+        console.log('display title');
+        getQuestionById(id)
+        .then(question => {
+            console.log('question data!!:', question);
+            setQuestionText(question.question)
+        })
+        .catch((error) => {
+            console.error('get question error!!:', error);
+        });
+    }else if(step==2) {
+        console.log('display selection');
+    }else if(step==3) {
+        console.log('answer check');
+    }else if(step==4) {
+        console.log('display answer');
+    }else if(step==5) {
+        console.log('display end');
+    }
+
+      
+  },[id, step]);
+
+  const getQuestionById = async (id: number) => {
+    const data = {
+        id: id,
+    }
+    const res = await fetch(`/api/questions/select`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    const question = await res.json();
+    return question.shift();
+  }
 
 
   return (
@@ -21,7 +68,7 @@ const Home:NextPage = () => {
 
     <main css={style_index.Container}>
       <h2 css={[style_index.title, style_utility.mb30]}>Party</h2>
-      <p css={[style_index.questionTitle, style_utility.mb30]}>お寿司はどれ</p>
+      <p css={[style_index.questionTitle, style_utility.mb30]}>{questionText}</p>
       <section css={style_index.CardsWrap}>
         <button css={[style_btn.StylePrimaryBtn, style_index.CardWrap ,style_utility.mb30]}>A</button>
         <button css={[style_btn.StyleDangerBtn, style_index.CardWrap ,style_utility.mb30]}>B</button>

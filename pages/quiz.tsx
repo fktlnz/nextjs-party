@@ -78,11 +78,10 @@ const Home:NextPage = () => {
         answer:""
     })
     //0(default), 1(display title), 2(display selection), 3(answer check), 4(display answer)
-    const {id, step, sendStep} = useSocket();
+    const {id, step} = useSocket();
     const {count, startCount} = useCount();
     const [playSoundTitle] = useSound('/sounds/sound_title.mp3');
 
-    // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
 
         if(step==0){
