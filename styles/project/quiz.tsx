@@ -7,6 +7,7 @@ export const Container = css`
     padding: 20px 0;
     height: 100vh;
     position: relative;
+    background: url('/img/party.png') no-repeat 50% 50%;
 `
 
 export const TitleWrap = css`
