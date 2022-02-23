@@ -69,6 +69,19 @@ nextApp.prepare().then(async() => {
             socket.broadcast.emit(DISPLAY_END, data);
         });
 
+        // Listen for new Vote
+        socket.on("voteQuiz", (data) => {
+            console.log('voteQuiz:');
+            console.log(data);
+            socket.broadcast.emit("voteQuiz", data);
+        });
+
+        // Listen for reset Vote
+        socket.on("resetVote", () => {
+            console.log('resetVote');
+            socket.broadcast.emit("resetVote");
+        });
+
         socket.on('disconnect', () => {
             console.log('client disconnected');
         })

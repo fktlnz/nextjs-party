@@ -13,6 +13,8 @@ const SOCKET_SERVER_URL = "http://localhost:3000";
 const useSocket = () => {
   const [step, setStep] = useState(0); // Sent and received messages
   const [id, setId] = useState(-1);
+  const [voteResult, setVoteResult] = useState([0, 0, 0, 0])
+  const [isStartVote, setIsStartVote] = useState(false)
   const socketRef = useRef();
 
   useEffect(() => {
@@ -52,6 +54,27 @@ const useSocket = () => {
       console.log(message)
     });
 
+    // Accept Vote
+    socketRef.current.on("startVote", (data) => {
+      setIsStartVote(true);
+    });
+
+    // Vote Count Up
+    socketRef.current.on("voteQuiz", (data) => {
+      console.log('VoteQuiz:')
+      console.log(data.index)
+      setVoteResult((beforeVoteResult) => 
+        beforeVoteResult.map((number, index) => (index==data.index-1) ? number+1 :number)
+      )
+      console.log(voteResult)
+
+    });
+
+    // Reset Vote
+    socketRef.current.on("resetVote", () => {
+      setVoteResult([0, 0, 0, 0]);
+    });
+
     // Destroys the socket reference
     // when the connection is closed
     return () => {
@@ -79,7 +102,24 @@ const useSocket = () => {
     });
   };
 
-  return { id, step, sendStep };
+  //Vote
+  const countUpVote = (index) => {
+    console.log('countUp!!:'+index);
+    console.log('type(index)!!:'+ typeof(index));
+    console.log('voteResult:'+voteResult)
+    socketRef.current.emit('voteQuiz',{
+      index:index,
+      senderId: socketRef.current.id
+    });
+  }
+
+  //Reset Vote
+  const resetVote = (index) => {
+    console.log('resetVote')
+    socketRef.current.emit('resetVote');
+  }
+
+  return { id, step, voteResult, sendStep, countUpVote, resetVote };
 };
 
 export default useSocket;

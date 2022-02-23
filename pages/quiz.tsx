@@ -78,7 +78,7 @@ const Home:NextPage = () => {
         answer:""
     })
     //0(default), 1(display title), 2(display selection), 3(answer check), 4(display answer)
-    const {id, step} = useSocket();
+    const {id, step, voteResult} = useSocket();
     const {count, startCount} = useCount();
     const [playSoundTitle] = useSound('/sounds/sound_title.mp3');
 
@@ -211,7 +211,7 @@ const Home:NextPage = () => {
                     </div>
                     <div className="border-top-primary" css={style_quiz.CardBottom}>
                         <span className="bg-primary" css={style_quiz.CardBottomLabel}>A</span>
-                        <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>10</span>
+                        <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>{voteResult[0]}</span>
                     </div>
                 </div>
                 <div className="border-danger" css={(step>=4 && question.answer=="2") ? [style_quiz.CardWrap, style_utility.mb30, style_quiz.CorrectShadow]:[style_quiz.CardWrap, style_utility.mb30]}>
@@ -220,7 +220,7 @@ const Home:NextPage = () => {
                     </div>
                     <div className="border-top-danger" css={style_quiz.CardBottom}>
                         <span className="bg-danger" css={style_quiz.CardBottomLabel}>B</span>
-                        <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>10</span>
+                        <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>{voteResult[1]}</span>
                     </div>
                 </div>
                 <div className="border-success" css={(step>=4 && question.answer=="3") ? [style_quiz.CardWrap, style_utility.mb10, style_quiz.CorrectShadow]:[style_quiz.CardWrap, style_utility.mb10]}>
@@ -229,7 +229,7 @@ const Home:NextPage = () => {
                     </div>
                     <div className="border-top-success" css={style_quiz.CardBottom}>
                         <span className="bg-success" css={style_quiz.CardBottomLabel}>C</span>
-                        <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>10</span>
+                        <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>{voteResult[2]}</span>
                     </div>
                 </div>
                 <div className="border-warning" css={(step>=4 && question.answer=="4") ? [style_quiz.CardWrap, style_utility.mb10, style_quiz.CorrectShadow]:[style_quiz.CardWrap, style_utility.mb10]}>
@@ -238,7 +238,7 @@ const Home:NextPage = () => {
                     </div>
                     <div className="border-top-warning" css={style_quiz.CardBottom}>
                         <span className="bg-warning" css={style_quiz.CardBottomLabel}>D</span>
-                        <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>10</span>
+                        <span css={(step>=3) ? style_quiz.CardBottomCount : style_utility.display_none}>{voteResult[3]}</span>
                     </div>
                 </div>
                 
