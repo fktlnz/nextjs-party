@@ -12,8 +12,9 @@ import * as style_btn from '../styles/components/sbtn'
 
 const Home:NextPage = () => {
 
-    const {id, step, countUpVote} = useSocket();
+    const {id, step, countUpVote, sendMessage} = useSocket();
     const [questionText, setQuestionText] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
 
     useEffect(() => {
 
@@ -61,6 +62,15 @@ const Home:NextPage = () => {
         countUpVote(index)
     }
 
+    const handleSubmitMessage = () => {
+        console.log(message);
+        sendMessage(message);
+        setMessage("");
+    }
+    const handleChangeMessage = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setMessage(e.target.value)
+    }
+
 
     return (
         <div css={style_utility.color_bg}>
@@ -79,6 +89,10 @@ const Home:NextPage = () => {
             <button onClick={()=>countUp(3)} css={[style_btn.StyleSuccessBtn, style_index.CardWrap ,style_utility.mb30]}>C</button>
             <button onClick={()=>countUp(4)} css={[style_btn.StyleWarningBtn, style_index.CardWrap ,style_utility.mb30]}>D</button>
         </section>
+        <div css={style_utility.mb30}>
+            <input onChange={(e)=>handleChangeMessage(e)} css={style_utility.mb10} type="text" placeholder="メッセージを送信" value={message}/>
+            <button onClick={()=>handleSubmitMessage()} css={style_btn.StyleBtn} type="button">送信</button>
+        </div>
         </main>
         <style jsx>{`
             .bg-primary {
@@ -92,6 +106,10 @@ const Home:NextPage = () => {
             }
             .bg-warning {
                 background-color: #C2B752;
+            }
+            input[type="text"] {
+                background-color: #fff;
+                font-size: 
             }
         `}
         </style>

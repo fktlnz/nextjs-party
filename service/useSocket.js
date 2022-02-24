@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
+// service
+import useComment from '../service/useComment';
+
 const DISPLAY_TITLE_EVENT = "displayTitleEvent"; // Name of the event
 const DISPLAY_SELECTION_EVENT = "displaySelectionEvent"; // Name of the event
 const DISPLAY_ANSWER_CHECK_EVENT = "displayAnswerCheckEvent"; // Name of the event
@@ -13,8 +16,10 @@ const SOCKET_SERVER_URL = "http://localhost:3000";
 const useSocket = () => {
   const [step, setStep] = useState(0); // Sent and received messages
   const [id, setId] = useState(-1);
-  const [voteResult, setVoteResult] = useState([0, 0, 0, 0])
-  const [isStartVote, setIsStartVote] = useState(false)
+  const {run} = useComment();
+  const [message, setMessage] = useState("");
+  const [voteResult, setVoteResult] = useState([0, 0, 0, 0]);
+  const [isStartVote, setIsStartVote] = useState(false);
   const socketRef = useRef();
 
   useEffect(() => {
@@ -30,25 +35,25 @@ const useSocket = () => {
       setId(() => data.id);
       setStep(() => 1);
     });
-    // Listens for incoming messages
+    // Listens for incoming DISPLAY_SELECTION_EVENT
     socketRef.current.on(DISPLAY_SELECTION_EVENT, (data) => {
       console.log('setStep:2!!');
       setStep(2);
     });
-    // Listens for incoming messages
+    // Listens for incoming DISPLAY_ANSWER_CHECK_EVENT
     socketRef.current.on(DISPLAY_ANSWER_CHECK_EVENT, (data) => {
       console.log('setStep:3!!');
       setStep(3);
     });
-    // Listens for incoming messages
+    // Listens for incoming DISPLAY_ANSWER_EVENT
     socketRef.current.on(DISPLAY_ANSWER_EVENT, (data) => {
       setStep(4);
     });
-    // Listens for incoming messages
+    // Listens for incoming DISPLAY_END
     socketRef.current.on(DISPLAY_END, (data) => {
       setStep(0);
     });
-    // Listens for incoming messages
+    // Listens for incoming status
     socketRef.current.on("status", (message) => {
       console.log('status');
       console.log(message)
@@ -68,6 +73,13 @@ const useSocket = () => {
       )
       console.log(voteResult)
 
+    });
+
+    // Listens for incoming sendMessage
+    socketRef.current.on("sendMessage", (data) => {
+      // setMessage(data.message)
+      console.log('received message!:'+data.message)
+      run(data.message)
     });
 
     // Reset Vote
@@ -119,7 +131,16 @@ const useSocket = () => {
     socketRef.current.emit('resetVote');
   }
 
-  return { id, step, voteResult, sendStep, countUpVote, resetVote };
+  //Send Message
+  const sendMessage = (message) => {
+    console.log('message!!:'+message);
+    socketRef.current.emit('sendMessage',{
+      message:message,
+      senderId: socketRef.current.id
+    });
+  }
+
+  return { id, step, voteResult, message, sendStep, countUpVote, resetVote, sendMessage };
 };
 
 export default useSocket;

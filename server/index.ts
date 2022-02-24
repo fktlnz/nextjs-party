@@ -82,6 +82,13 @@ nextApp.prepare().then(async() => {
             socket.broadcast.emit("resetVote");
         });
 
+        // Listen for new Message
+        socket.on("sendMessage", (data) => {
+            console.log('sendMessage:');
+            console.log(data);
+            socket.broadcast.emit("sendMessage", data);
+        });
+
         socket.on('disconnect', () => {
             console.log('client disconnected');
         })
