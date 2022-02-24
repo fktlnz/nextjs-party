@@ -19,7 +19,7 @@ const Home:NextPage = () => {
     useEffect(() => {
 
         if(step==0){
-        setQuestionText("問題発表までおまちください・・");
+            setQuestionText("問題発表までおまちください・・");
         }else if(step==1) {
             console.log('display title');
             getQuestionById(id)

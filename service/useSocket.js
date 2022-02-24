@@ -32,25 +32,25 @@ const useSocket = () => {
       console.log('data!!')
       console.log(data)
       console.log('setStep:1!!');
-      setId(() => data.id);
-      setStep(() => 1);
+      setId(data.id);
+      setStep(1);
     });
     // Listens for incoming DISPLAY_SELECTION_EVENT
-    socketRef.current.on(DISPLAY_SELECTION_EVENT, (data) => {
+    socketRef.current.on(DISPLAY_SELECTION_EVENT, () => {
       console.log('setStep:2!!');
       setStep(2);
     });
     // Listens for incoming DISPLAY_ANSWER_CHECK_EVENT
-    socketRef.current.on(DISPLAY_ANSWER_CHECK_EVENT, (data) => {
+    socketRef.current.on(DISPLAY_ANSWER_CHECK_EVENT, () => {
       console.log('setStep:3!!');
       setStep(3);
     });
     // Listens for incoming DISPLAY_ANSWER_EVENT
-    socketRef.current.on(DISPLAY_ANSWER_EVENT, (data) => {
+    socketRef.current.on(DISPLAY_ANSWER_EVENT, () => {
       setStep(4);
     });
     // Listens for incoming DISPLAY_END
-    socketRef.current.on(DISPLAY_END, (data) => {
+    socketRef.current.on(DISPLAY_END, () => {
       setStep(0);
     });
     // Listens for incoming status
@@ -59,20 +59,22 @@ const useSocket = () => {
       console.log(message)
     });
 
-    // Accept Vote
-    socketRef.current.on("startVote", (data) => {
+    // Start Vote
+    socketRef.current.on("startVote", () => {
       setIsStartVote(true);
+    });
+    // End Vote
+    socketRef.current.on("endVote", () => {
+      console.log('endVote!!');
+      setIsStartVote(false);
     });
 
     // Vote Count Up
     socketRef.current.on("voteQuiz", (data) => {
-      console.log('VoteQuiz:')
-      console.log(data.index)
+      console.log("isStartVote:"+isStartVote);
       setVoteResult((beforeVoteResult) => 
         beforeVoteResult.map((number, index) => (index==data.index-1) ? number+1 :number)
       )
-      console.log(voteResult)
-
     });
 
     // Listens for incoming sendMessage
@@ -116,13 +118,15 @@ const useSocket = () => {
 
   //Vote
   const countUpVote = (index) => {
-    console.log('countUp!!:'+index);
-    console.log('type(index)!!:'+ typeof(index));
-    console.log('voteResult:'+voteResult)
-    socketRef.current.emit('voteQuiz',{
-      index:index,
-      senderId: socketRef.current.id
-    });
+    console.log('voteResult:'+voteResult);
+    console.log('isStartVote');
+    console.log(isStartVote);
+    if(isStartVote===true){
+      socketRef.current.emit('voteQuiz',{
+        index:index,
+        senderId: socketRef.current.id
+      });
+    }
   }
 
   //Reset Vote
@@ -140,7 +144,16 @@ const useSocket = () => {
     });
   }
 
-  return { id, step, voteResult, message, sendStep, countUpVote, resetVote, sendMessage };
+  //Start Vote Acception
+  const enableVote = (bool) => {
+    if(bool===true) { socketRef.current.emit('startVote');}
+    else { 
+      console.log('endVote!!');
+      socketRef.current.emit('endVote'); 
+    }
+  } 
+
+  return { id, step, voteResult, message, sendStep, countUpVote, enableVote, resetVote, sendMessage };
 };
 
 export default useSocket;

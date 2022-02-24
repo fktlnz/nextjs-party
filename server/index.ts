@@ -76,6 +76,18 @@ nextApp.prepare().then(async() => {
             socket.broadcast.emit("voteQuiz", data);
         });
 
+        // Listen for start Vote
+        socket.on("startVote", () => {
+            console.log('startVote');
+            socket.broadcast.emit("startVote");
+        });
+
+        // Listen for end Vote
+        socket.on("endVote", () => {
+            console.log('endVote');
+            socket.broadcast.emit("endVote");
+        });
+
         // Listen for reset Vote
         socket.on("resetVote", () => {
             console.log('resetVote');

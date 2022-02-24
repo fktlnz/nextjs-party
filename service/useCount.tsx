@@ -11,16 +11,11 @@ const useCount = () => {
     const [direction, setDirection] = useState("down")
     const [count, setCount] = useState(0);
     const [timerFlag, setTimerFlag] = useState(false);
+    const [isTimerEnd, setIsTimerEnd] = useState(false);
 
     useEffect(() => {
         if (timerFlag) {
             const id = setTimeout(() => {
-                console.log('start---')
-                console.log(timeStart)
-                console.log('end---')
-                console.log(timeEnd)
-                console.log('count')
-                console.log(count)
                 setCount((beforecount) => {
                     console.log('timer・・・')
                     if(direction=="up"){
@@ -28,6 +23,7 @@ const useCount = () => {
                             return (beforecount + 1);
                         } else {
                             setTimerFlag(false);
+                            setIsTimerEnd(true);
                             return beforecount;
                         }
                     }else{
@@ -35,6 +31,7 @@ const useCount = () => {
                             return (beforecount - 1);
                         } else {
                             setTimerFlag(false);
+                            setIsTimerEnd(true);
                             return beforecount;
                         }
 
@@ -64,15 +61,14 @@ const useCount = () => {
         setEnd(upLimit, downLimit, direction);
         setDirection(direction)
         setTimerFlag(true);
-        console.log("timeStart");
-        console.log(timeStart);
-        console.log("timeEnd");
-        console.log(timeEnd);
-        console.log("direction");
-        console.log(direction);
     };
 
-    return { count, startCount };
+    const initCount = () => {
+        console.log('timer init!');
+        setIsTimerEnd(false);
+    }
+
+    return { count, isTimerEnd , initCount, startCount };
 };
 
 export default useCount;

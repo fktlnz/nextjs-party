@@ -78,29 +78,31 @@ const Home:NextPage = () => {
         answer:""
     })
     //0(default), 1(display title), 2(display selection), 3(answer check), 4(display answer)
-    const {id, step, voteResult} = useSocket();
-    const {count, startCount} = useCount();
+    const {id, step, voteResult, enableVote} = useSocket();
+    const {count, isTimerEnd, initCount, startCount} = useCount();
     const [playSoundTitle] = useSound('/sounds/sound_title.mp3');
 
     useEffect(() => {
-
         if(step==0){
-
+            initCount();//タイマーリセット
+            return;
         }else if(step==1) {
             console.log('display title');
             playSoundTitle()
             getQuestionById(id)
             .then(question => {
                 console.log('question data!!:', question);
-                setQuestion(question)
+                setQuestion(question);
             })
             .catch((error) => {
                 console.error('get question error!!:', error);
             });
         }else if(step==2) {
-            console.log('display selection');
-            //カウント開始
-            startCount(10, 0, "down");
+            if(isTimerEnd===false) {
+                console.log('display selection');
+                //カウント開始
+                startCount(10, 0, "down");
+            }
         }else if(step==3) {
             console.log('answer check');
         }else if(step==4) {
@@ -108,9 +110,15 @@ const Home:NextPage = () => {
         }else if(step==5) {
             console.log('display end');
         }
-
+        console.log('isTimerEnd');
+        console.log(isTimerEnd);
+        if(isTimerEnd===true) {
+            console.log('timerFlag!!!!')
+            enableVote(false);
+            return;
+        }
         
-    },[id, step]);
+    },[step, isTimerEnd]);
     // 問題新規保存
     const saveQuestion = async (input:IFormInputs) => {
         const data = {

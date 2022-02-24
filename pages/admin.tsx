@@ -80,7 +80,7 @@ const Home:NextPage = ({data}:any) => {
     const [rowsdata, setRowsData] = useState<TableData[]>(data)
     const [row, setRow] = React.useState("0")
     const [imgPaths, setImgPaths] = React.useState([])
-    const {id, step, sendStep, resetVote} = useSocket();
+    const {id, step, sendStep, enableVote, resetVote} = useSocket();
 
     // react-hook-form
     const { register, formState: { errors }, handleSubmit, reset } = useForm<IFormInputs>({
@@ -296,6 +296,8 @@ const Home:NextPage = ({data}:any) => {
         if(step==1){
             sendStep(id, DISPLAY_TITLE_EVENT);
         }else if(step==2) {
+            //投票受付開始
+            enableVote(true);
             sendStep(id, DISPLAY_SELECTION_EVENT);
         }else if(step==3) {
             sendStep(id, DISPLAY_ANSWER_CHECK_EVENT);
