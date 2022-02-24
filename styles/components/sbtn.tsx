@@ -5,7 +5,7 @@ export const StyleBtn = css`
     width: 100px;
     padding: 4px 8px;
     background-color: #525252;
-    font-size: 14px;
+    font-size: 1em;
     line-height:1.5;
     border-radius: 4px;
     border: none;

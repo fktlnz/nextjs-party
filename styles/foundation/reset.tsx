@@ -64,7 +64,7 @@ input[type="text"] {
   border-radius: 4px;
   color: inherit;
   font-family: inherit;
-  /* font-size: 1em; */
+  font-size: 1em;
   padding: 0.4em 0.8em;
   width: 100%;
 }
