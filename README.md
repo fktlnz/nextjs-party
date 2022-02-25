@@ -1,34 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Party
+オールスター感謝祭っぽいゲーム(by Next.js)
 
-## Getting Started
+# 概要
+下記3画面から構成される。
 
-First, run the development server:
+- 解答フォーム(index page)
+- 問題投影ページ(quiz page)
+- 管理画面(admin page)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+# Demo
+![party_movie.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/187747/a9d256bf-5a65-336c-be59-cf13336e53ec.gif)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 解答フォーム(index page)
+- カウントダウンの間、参加者はリアルタイムに解答を送信することができる
+- ニコ動みたいにコメントを投影画面に投げることができる
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+![party_movie_index.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/187747/62a7225a-3c51-36d8-e116-7ff96e643d9b.gif)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 問題投影ページ(quiz page)
+- 問題を表示するページ
+- 参加者からの解答数をリアルタイムに反映
+- 問題文表示、選択肢表示、Answer Check、回答表示のそれぞれでサウンド
 
-## Learn More
+![party_movie_quiz.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/187747/b89baab6-dd61-8ce0-d979-ea4e2966f867.gif)
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 管理画面(admin page)
+- 問題作成、削除ページ
+- 画像読み込み可（画像を優先して表示）
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![party_movie_admin.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/187747/00170b15-effb-d3bb-7c5a-c232c24508d5.gif)
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

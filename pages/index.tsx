@@ -2,6 +2,7 @@
 import React, {useState, useEffect} from "react";
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import Image from "next/image";
 // service
 import useSocket from '../service/useSocket';
 // Styles
@@ -81,7 +82,9 @@ const Home:NextPage = () => {
         </Head>
 
         <main css={style_index.Container}>
-        <h2 css={[style_index.title, style_utility.mb30]}>Party</h2>
+        <div className="txt-center">
+            <Image src="/img/party.png" width={150} height={150}/>
+        </div>
         <p css={[style_index.questionTitle, style_utility.mb30]}>{questionText}</p>
         <section css={style_index.CardsWrap}>
             <button onClick={()=>countUp(1)} css={[style_btn.StylePrimaryBtn, style_index.CardWrap ,style_utility.mb30]}>A</button>
@@ -95,21 +98,12 @@ const Home:NextPage = () => {
         </div>
         </main>
         <style jsx>{`
-            .bg-primary {
-                background-color: #527FC2;
-            }
-            .bg-danger {
-                background-color: #C25252;
-            }
-            .bg-success {
-                background-color: #52C256;
-            }
-            .bg-warning {
-                background-color: #C2B752;
-            }
             input[type="text"] {
                 background-color: #fff;
                 font-size: 
+            }
+            .txt-center {
+                text-align: center;
             }
         `}
         </style>
