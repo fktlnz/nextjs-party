@@ -1,5 +1,5 @@
 # Party
-オールスター感謝祭っぽいゲーム(by Next.js)
+オールスター感謝祭っぽいゲーム(by Next.js（typescript))
 
 # 概要
 下記3画面から構成される。

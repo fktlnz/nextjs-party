@@ -18,16 +18,3 @@ export const title = css`
 export const questionTitle = css`
     font-size: 30px;
 `
-
-export const CardsWrap = css`
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-`
-
-export const CardWrap = css`
-    width: 49%;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 20px;
-`
