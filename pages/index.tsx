@@ -70,7 +70,7 @@ const Home:NextPage = () => {
 
     return (
         <IndexTemplate text={questionText}>
-            <ButtonGroup />
+            <ButtonGroup onClick={countUp} />
             <SubmitForm onChange={(e) => handleChangeMessage(e)} onClick={()=>handleSubmitMessage()} value={message}/>
         </IndexTemplate>
     )
