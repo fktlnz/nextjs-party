@@ -67,7 +67,7 @@ const DisplaySelect:React.VFC<PropsDisplaySelect>= (props) => {
 }
 
 const Home:NextPage = () => {
-    const [question, setQuestion] = React.useState<TableData>({
+    const [question, setQuestion] = useState<TableData>({
         id:-1,
         question:"",
         select1_text:"",

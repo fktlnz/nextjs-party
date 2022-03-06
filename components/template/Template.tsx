@@ -34,7 +34,7 @@ export const IndexTemplate = (props: PropsIndex) => {
 export const QuizTemplate = (props: Props) => {
     const {children} = props;
     return (
-        <div css={style_utility.color_bg}>
+        <div css={quizBackImageColor}>
             <GlobalHeader title="Quiz Page" />
             <main css={mainContainer}>
                 {children}
@@ -62,6 +62,10 @@ export const AdminTemplate = (props: Props) => {
 const rootContainer = css({
 
 });
+
+const quizBackImageColor = css({
+    background: "url('/img/party.png') #E2F0FF no-repeat 50% 50%"
+})
 
 const mainContainer = css({
     maxWidth:1280,
