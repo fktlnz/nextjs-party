@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { css } from "@emotion/react"
 import { Button } from "@/components/atoms/Button"
 //utility
 import * as style_utility from '@/styles/utility/utility'
@@ -8,10 +8,10 @@ import * as style_utility from '@/styles/utility/utility'
 type Props = JSX.IntrinsicElements["button"] & {
     onClickDisplay: (step:number)=> void,
     deleteQuestion: ()=>void
-};
+}
 
 export const ButtonGroupAdmin = (props:Props) => {
-    const {...buttonProps} = props;
+    const {...buttonProps} = props
     return (
         <div css={style_utility.mb30}>
             <ul>

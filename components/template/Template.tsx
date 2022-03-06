@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import {GlobalHeader} from "@/components/args/GlobalHeader";
-import * as style_utility from '@/styles/utility/utility';
-import Image from "next/image";
-import { String } from "aws-sdk/clients/cloudsearch";
-import Footer from "@/components/footer";
+import { css } from "@emotion/react"
+import {GlobalHeader} from "@/components/args/GlobalHeader"
+import * as style_utility from '@/styles/utility/utility'
+import Image from "next/image"
+import { String } from "aws-sdk/clients/cloudsearch"
+import Footer from "@/components/footer"
 
 type Props = {
   children?: React.ReactNode
@@ -16,7 +16,7 @@ type PropsIndex = {
 
 
 export const IndexTemplate = (props: PropsIndex) => {
-    const {children} = props;
+    const {children} = props
     return (
         <div>
             <GlobalHeader />
@@ -32,7 +32,7 @@ export const IndexTemplate = (props: PropsIndex) => {
 }
 
 export const QuizTemplate = (props: Props) => {
-    const {children} = props;
+    const {children} = props
     return (
         <div css={quizBackImageColor}>
             <GlobalHeader title="Quiz Page" />
@@ -44,7 +44,7 @@ export const QuizTemplate = (props: Props) => {
 }
 
 export const AdminTemplate = (props: Props) => {
-    const {children} = props;
+    const {children} = props
     return (
         <div>
             <GlobalHeader title="Admin Page" />
@@ -61,7 +61,7 @@ export const AdminTemplate = (props: Props) => {
 
 const rootContainer = css({
 
-});
+})
 
 const quizBackImageColor = css({
     background: "url('/img/party.png') #E2F0FF no-repeat 50% 50%"

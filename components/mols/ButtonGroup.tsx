@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { css } from "@emotion/react"
 import { Button } from "@/components/atoms/Button"
 //utility
 import * as style_utility from '@/styles/utility/utility'
@@ -10,7 +10,7 @@ type Props = {
 }
 
 export const ButtonGroup = (props:Props) => {
-    const {...buttonProps} = props;
+    const {...buttonProps} = props
     return (
         <section css={CardsWrap}>
             <Button onClick={()=>props.onClick(1)} variant="primary" css={[CardWrap, style_utility.mb30]}>A</Button>

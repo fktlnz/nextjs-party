@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { css } from "@emotion/react"
 import * as style_utility from '@/styles/utility/utility'
 import { Button } from "@/components/atoms/Button"
 

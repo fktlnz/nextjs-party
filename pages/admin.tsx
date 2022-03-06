@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, {useState} from "react";
+import React, {useState} from "react"
 import type { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
@@ -16,16 +16,12 @@ import * as style_btn from '../styles/components/sbtn'
 import styles_admin from '../styles/Admin.module.css'
 import styles_util from '../styles/Utility.module.css'
 // Form
-import { useForm, SubmitHandler } from "react-hook-form";
-import { styleReset } from "../styles/foundation/reset";
-import { update } from "../server/db";
-import { AdminTemplate } from "@/components/template/Template";
-import { ButtonGroupAdmin } from "@/components/mols/ButtonGroupAdmin";
+import { useForm, SubmitHandler } from "react-hook-form"
+import { styleReset } from "../styles/foundation/reset"
+import { update } from "../server/db"
+import { AdminTemplate } from "@/components/template/Template"
+import { ButtonGroupAdmin } from "@/components/mols/ButtonGroupAdmin"
 
-// const btnMarginStyle = css`
-//     ${style_utility.mb5};
-//     ${style_utility.mr5}
-// `
 
 type TableData = {
     id:number,
@@ -39,11 +35,11 @@ type TableData = {
     select4_text:string,
     select4_imgpath:string,
     answer:string
-};
+}
 
 type TableDatas = {
     rows:TableData[]
-};
+}
 
 type imgPath = {
     img_path1: string,
@@ -65,35 +61,35 @@ type ButtonProps = {
     step: Number
 }
 
-const DISPLAY_TITLE_EVENT = "displayTitleEvent";
-const DISPLAY_SELECTION_EVENT = "displaySelectionEvent";
-const DISPLAY_ANSWER_CHECK_EVENT = "displayAnswerCheckEvent";
-const DISPLAY_ANSWER_EVENT = "displayAnswerEvent";
-const DISPLAY_END = 'displayEnd'; 
+const DISPLAY_TITLE_EVENT = "displayTitleEvent"
+const DISPLAY_SELECTION_EVENT = "displaySelectionEvent"
+const DISPLAY_ANSWER_CHECK_EVENT = "displayAnswerCheckEvent"
+const DISPLAY_ANSWER_EVENT = "displayAnswerEvent"
+const DISPLAY_END = 'displayEnd' 
 
 const Home:NextPage = ({data}:any) => {
-    const [hasError, setHasError] = useState<boolean>(false);
-    const [question, setQuestion] = useState("");
-    const [select1, setSelect1] = useState("");
-    const [select2, setSelect2] = useState("");
-    const [select3, setSelect3] = useState("");
-    const [select4, setSelect4] = useState("");
-    const [answer, setAnswer] = useState("");
+    const [hasError, setHasError] = useState<boolean>(false)
+    const [question, setQuestion] = useState("")
+    const [select1, setSelect1] = useState("")
+    const [select2, setSelect2] = useState("")
+    const [select3, setSelect3] = useState("")
+    const [select4, setSelect4] = useState("")
+    const [answer, setAnswer] = useState("")
     const [rowsdata, setRowsData] = useState<TableData[]>(data)
     const [row, setRow] = React.useState("0")
     const [imgPaths, setImgPaths] = React.useState([])
-    const {id, step, sendStep, enableVote, resetVote} = useSocket();
+    const {id, step, sendStep, enableVote, resetVote} = useSocket()
 
     // react-hook-form
     const { register, formState: { errors }, handleSubmit, reset } = useForm<IFormInputs>({
         mode: "onChange",
         criteriaMode: "all",
         shouldFocusError: false,
-    });
+    })
     const onSubmit: SubmitHandler<IFormInputs> = async input => {
-        console.log(input);
+        console.log(input)
         if(errors.answer){
-            console.log('answer error');
+            console.log('answer error')
             return
         }
 
@@ -101,12 +97,12 @@ const Home:NextPage = ({data}:any) => {
             return
         }
         // 問題新規登録
-        await saveQuestion(input);
+        await saveQuestion(input)
         // テーブル更新
         updateTable()
 
         // Form Reset
-        reset();
+        reset()
     }
 
     // 問題新規保存
@@ -132,12 +128,12 @@ const Home:NextPage = ({data}:any) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Save Data!!:', data);
+            console.log('Save Data!!:', data)
             
         })
         .catch((error) => {
-            console.error('Save Error!!:', error);
-        });
+            console.error('Save Error!!:', error)
+        })
     }
     // DBを更新
     const updateQuestion = async (tableData:TableData) => {
@@ -163,12 +159,12 @@ const Home:NextPage = ({data}:any) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Update Data!!:', data);
+            console.log('Update Data!!:', data)
             
         })
         .catch((error) => {
-            console.error('Update Error!!:', error);
-        });
+            console.error('Update Error!!:', error)
+        })
 
     }
 
@@ -177,14 +173,14 @@ const Home:NextPage = ({data}:any) => {
         getQuestions()
         .then(response => response.json())
         .then(data => {
-            console.log('tableData:', data);
+            console.log('tableData:', data)
             setRowsData((prevRowsData:TableData[]) => {
                 return [...data]
             })
         })
         .catch((error) => {
-            console.error('Error:', error);
-        });
+            console.error('Error:', error)
+        })
     }
 
     // 問題をDBから取得
@@ -194,12 +190,12 @@ const Home:NextPage = ({data}:any) => {
 
     // row行目の問題を削除
     const deleteQuestion = async () => {
-        console.log(row+"行目のデータを削除します");
-        const rowNum = parseInt(row);
-        const targetData = rowsdata[rowNum];
+        console.log(row+"行目のデータを削除します")
+        const rowNum = parseInt(row)
+        const targetData = rowsdata[rowNum]
         console.log('targetData')
-        console.log(targetData);
-        const targetId = targetData.id;
+        console.log(targetData)
+        const targetId = targetData.id
         console.log('targetData')
         console.log(targetData)
         console.log('targetId')
@@ -215,50 +211,50 @@ const Home:NextPage = ({data}:any) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Delete Data!!:', data);
+            console.log('Delete Data!!:', data)
             updateTable()
         })
         .catch((error) => {
-            console.error('Delete Error!!:', error);
-        });
+            console.error('Delete Error!!:', error)
+        })
     }
 
     //問題を全削除する
     const deleteAllQuestion = async () => {
-        const res = await fetch('/api/questions/deleteall');
-        const {message} = await res.json();
-        console.log('delete all question:'+message);
+        const res = await fetch('/api/questions/deleteall')
+        const {message} = await res.json()
+        console.log('delete all question:'+message)
     }
 
     //テーブルをリセットする
     const resetTable = async () => {
-        await deleteAllQuestion();
+        await deleteAllQuestion()
         updateTable()
     }
 
     // 画像をアップロード
     const handleUploadPhoto = async (e:any, index:string, rowNum:string) => {
-        const file = e.target.files[0];
-        const filename = encodeURIComponent(file.name);
-        const res = await fetch(`/api/upload-url?file=${filename}`);
-        const { url, fields } = await res.json();
-        const formData = new FormData();
+        const file = e.target.files[0]
+        const filename = encodeURIComponent(file.name)
+        const res = await fetch(`/api/upload-url?file=${filename}`)
+        const { url, fields } = await res.json()
+        const formData = new FormData()
         const data = {...fields, file}
         Object.keys(data).forEach((key) => {
-            formData.append(key, data[key]);
-        });
+            formData.append(key, data[key])
+        })
 
         const upload = await fetch(url, {
             method: 'POST',
             body: formData,
-        });
+        })
 
         if (upload.ok) {
-            console.log('Uploaded successfully!');
+            console.log('Uploaded successfully!')
             console.log('Table Update')
-            const rowNumInt = parseInt(rowNum); // 選択している行
-            const selectNum = parseInt(index); // 対象select
-            const imgS3Path = url + "/" + filename;
+            const rowNumInt = parseInt(rowNum) // 選択している行
+            const selectNum = parseInt(index) // 対象select
+            const imgS3Path = url + "/" + filename
 
             setRowsData((prevRowsData:TableData[]) => {
                 let aftRowsData = prevRowsData.map( list => ({...list}))
@@ -269,21 +265,21 @@ const Home:NextPage = ({data}:any) => {
 
                 updateQuestion(aftRowsData[rowNumInt])
                 .then(data => {
-                    console.log('Update Tablle!!:', data);
+                    console.log('Update Tablle!!:', data)
                     updateTable()
                 })
                 .catch((error) => {
-                    console.error('Update Table Error!!:', error);
-                });
+                    console.error('Update Table Error!!:', error)
+                })
 
                 return [...aftRowsData]
             })
 
 
         } else {
-            console.error('Upload failed.');
+            console.error('Upload failed.')
         }
-    };
+    }
 
     const onChangeRadio = (e:React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.target.value)
@@ -291,23 +287,23 @@ const Home:NextPage = ({data}:any) => {
     }
 
     const display = (step: Number) => {
-        const rowNum = parseInt(row);
-        const id = rowsdata[rowNum].id;
-        console.log('id='+id+'の問題を表示します');
-        console.log(step);
+        const rowNum = parseInt(row)
+        const id = rowsdata[rowNum].id
+        console.log('id='+id+'の問題を表示します')
+        console.log(step)
         if(step==1){
-            sendStep(id, DISPLAY_TITLE_EVENT);
+            sendStep(id, DISPLAY_TITLE_EVENT)
         }else if(step==2) {
             //投票受付開始
-            enableVote(true);
-            sendStep(id, DISPLAY_SELECTION_EVENT);
+            enableVote(true)
+            sendStep(id, DISPLAY_SELECTION_EVENT)
         }else if(step==3) {
-            sendStep(id, DISPLAY_ANSWER_CHECK_EVENT);
+            sendStep(id, DISPLAY_ANSWER_CHECK_EVENT)
         }else if(step==4) {
-            sendStep(id, DISPLAY_ANSWER_EVENT);
+            sendStep(id, DISPLAY_ANSWER_EVENT)
         }else if(step==5) {
-            resetVote();
-            sendStep(id, DISPLAY_END);
+            resetVote()
+            sendStep(id, DISPLAY_END)
         }
     }
 
@@ -354,9 +350,9 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
 
   console.log('serversideprops:')
   console.log(rtn)
-  let data;
+  let data
   if("message" in rtn) {
-      console.log('No Database');
+      console.log('No Database')
       data = [{
         id:0,
         question:"",

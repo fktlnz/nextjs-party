@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import * as React from 'react'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
 
-import Image from 'next/image';
+import Image from 'next/image'
 
 // Styles
 import * as style_utility from '../../styles/utility/utility'
@@ -25,13 +25,13 @@ type TableData = {
     select4_text:string,
     select4_imgpath:string,
     answer:string
-};
+}
 
 type TableDatas = {
     rows:TableData[],
     onChangeRadio:any,
     handleUploadPhoto:any
-};
+}
 
 type PropsDisplayImg = {
     isRead: boolean,
@@ -123,5 +123,5 @@ export default function BasicTable(props:TableDatas) {
       </Table>
     </TableContainer>
     </>
-  );
+  )
 }

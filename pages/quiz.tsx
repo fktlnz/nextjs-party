@@ -1,19 +1,19 @@
 /** @jsxImportSource @emotion/react */
-import React, {useState, useEffect} from "react";
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
+import React, {useState, useEffect} from "react"
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
 // service
-import useSocket from '../service/useSocket';
-import useCount from '../service/useCount';
+import useSocket from '../service/useSocket'
+import useCount from '../service/useCount'
 // Styles
-import * as style_quiz from '../styles/project/quiz';
-import * as style_utility from '../styles/utility/utility';
+import * as style_quiz from '../styles/project/quiz'
+import * as style_utility from '../styles/utility/utility'
 // Sound
-import useSound from 'use-sound';
-import { QuizTemplate } from "@/components/template/Template";
+import useSound from 'use-sound'
+import { QuizTemplate } from "@/components/template/Template"
 import { QuizHeader } from "@/components/args/QuizHeader"
-import { QuizMain } from "@/components/args/QuizMain";
+import { QuizMain } from "@/components/args/QuizMain"
 
 type TableData = {
     id:number,
@@ -27,11 +27,11 @@ type TableData = {
     select4_text:string,
     select4_imgpath:string,
     answer:string
-};
+}
 
 type TableDatas = {
     rows:TableData[]
-};
+}
 
 type imgPath = {
     img_path1: string,
@@ -81,47 +81,47 @@ const Home:NextPage = () => {
         answer:""
     })
     //0(default), 1(display title), 2(display selection), 3(answer check), 4(display answer)
-    const {id, step, voteResult, enableVote} = useSocket();
-    const {count, isTimerEnd, initCount, startCount} = useCount();
-    const [playSoundTitle] = useSound('/sounds/sound_title.mp3');
+    const {id, step, voteResult, enableVote} = useSocket()
+    const {count, isTimerEnd, initCount, startCount} = useCount()
+    const [playSoundTitle] = useSound('/sounds/sound_title.mp3')
 
     useEffect(() => {
         if(step==0){
-            initCount();//タイマーリセット
-            return;
+            initCount()//タイマーリセット
+            return
         }else if(step==1) {
-            console.log('display title');
+            console.log('display title')
             playSoundTitle()
             getQuestionById(id)
             .then(question => {
-                console.log('question data!!:', question);
-                setQuestion(question);
+                console.log('question data!!:', question)
+                setQuestion(question)
             })
             .catch((error) => {
-                console.error('get question error!!:', error);
-            });
+                console.error('get question error!!:', error)
+            })
         }else if(step==2) {
             if(isTimerEnd===false) {
-                console.log('display selection');
+                console.log('display selection')
                 //カウント開始
-                startCount(10, 0, "down");
+                startCount(10, 0, "down")
             }
         }else if(step==3) {
-            console.log('answer check');
+            console.log('answer check')
         }else if(step==4) {
-            console.log('display answer');
+            console.log('display answer')
         }else if(step==5) {
-            console.log('display end');
+            console.log('display end')
         }
-        console.log('isTimerEnd');
-        console.log(isTimerEnd);
+        console.log('isTimerEnd')
+        console.log(isTimerEnd)
         if(isTimerEnd===true) {
             console.log('timerFlag!!!!')
-            enableVote(false);
-            return;
+            enableVote(false)
+            return
         }
         
-    },[step, isTimerEnd]);
+    },[step, isTimerEnd])
     // 問題新規保存
     const saveQuestion = async (input:IFormInputs) => {
         const data = {
@@ -145,12 +145,12 @@ const Home:NextPage = () => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Save Data!!:', data);
+            console.log('Save Data!!:', data)
             
         })
         .catch((error) => {
-            console.error('Save Error!!:', error);
-        });
+            console.error('Save Error!!:', error)
+        })
     }
     // DBを更新
     const updateQuestion = async (tableData:TableData) => {
@@ -176,12 +176,12 @@ const Home:NextPage = () => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Update Data!!:', data);
+            console.log('Update Data!!:', data)
             
         })
         .catch((error) => {
-            console.error('Update Error!!:', error);
-        });
+            console.error('Update Error!!:', error)
+        })
 
     }
 
@@ -195,9 +195,9 @@ const Home:NextPage = () => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-        });
-        const question = await res.json();
-        return question.shift();
+        })
+        const question = await res.json()
+        return question.shift()
     }
 
     return (

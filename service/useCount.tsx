@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react"
 
-const UPLIMIT = 10;
-const DOWNLIMIT = 0;
-const DIRECTION = "down";
+const UPLIMIT = 10
+const DOWNLIMIT = 0
+const DIRECTION = "down"
 
 // 各チャットルームのメッセージ保持、メッセージブロードキャスト
 const useCount = () => {
-    const [timeStart, setTimeStart] = useState(10);
-    const [timeEnd, setTimeEnd] = useState(0);
+    const [timeStart, setTimeStart] = useState(10)
+    const [timeEnd, setTimeEnd] = useState(0)
     const [direction, setDirection] = useState("down")
-    const [count, setCount] = useState(0);
-    const [timerFlag, setTimerFlag] = useState(false);
-    const [isTimerEnd, setIsTimerEnd] = useState(false);
+    const [count, setCount] = useState(0)
+    const [timerFlag, setTimerFlag] = useState(false)
+    const [isTimerEnd, setIsTimerEnd] = useState(false)
 
     useEffect(() => {
         if (timerFlag) {
@@ -20,55 +20,55 @@ const useCount = () => {
                     console.log('timer・・・')
                     if(direction=="up"){
                         if(beforecount<timeEnd){
-                            return (beforecount + 1);
+                            return (beforecount + 1)
                         } else {
-                            setTimerFlag(false);
-                            setIsTimerEnd(true);
-                            return beforecount;
+                            setTimerFlag(false)
+                            setIsTimerEnd(true)
+                            return beforecount
                         }
                     }else{
                         if(beforecount>timeEnd){
-                            return (beforecount - 1);
+                            return (beforecount - 1)
                         } else {
-                            setTimerFlag(false);
-                            setIsTimerEnd(true);
-                            return beforecount;
+                            setTimerFlag(false)
+                            setIsTimerEnd(true)
+                            return beforecount
                         }
 
                     }
-                });
-            }, 1000);
-            return () => clearTimeout(id);
+                })
+            }, 1000)
+            return () => clearTimeout(id)
         }
-        return;
-    },[count]);
+        return
+    },[count])
 
     const setStart = (upLimit:number, downLimit:number, direction:string) => {
-        const start = (direction=="up") ? downLimit : upLimit;
+        const start = (direction=="up") ? downLimit : upLimit
         setCount(start)
-        setTimeStart(start);
+        setTimeStart(start)
     }
     const setEnd = (upLimit:number, downLimit:number, direction:string) => {
-        const end = (direction=="up") ? upLimit : downLimit;
-        setTimeEnd(end);
+        const end = (direction=="up") ? upLimit : downLimit
+        setTimeEnd(end)
     }
 
     // Sends a message to the server that
     // forwards it to all users in the same room
     const startCount = (upLimit:number=UPLIMIT, downLimit:number=DOWNLIMIT, direction:string=DIRECTION) => {
-        console.log('start count');
-        setStart(upLimit, downLimit, direction);
-        setEnd(upLimit, downLimit, direction);
+        console.log('start count')
+        setStart(upLimit, downLimit, direction)
+        setEnd(upLimit, downLimit, direction)
         setDirection(direction)
-        setTimerFlag(true);
-    };
-
-    const initCount = () => {
-        console.log('timer init!');
-        setIsTimerEnd(false);
+        setTimerFlag(true)
     }
 
-    return { count, isTimerEnd , initCount, startCount };
-};
+    const initCount = () => {
+        console.log('timer init!')
+        setIsTimerEnd(false)
+    }
 
-export default useCount;
+    return { count, isTimerEnd , initCount, startCount }
+}
+
+export default useCount

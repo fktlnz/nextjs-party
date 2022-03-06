@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import * as style_utility from "@/styles/utility/utility";
-import Image from "next/Image";
+import { css } from '@emotion/react'
+import * as style_utility from "@/styles/utility/utility"
+import Image from "next/Image"
 
 type Props = {
     step: number,
@@ -20,7 +20,7 @@ type Props = {
         select4_imgpath:string,
         answer:string
     }
-};
+}
 
 
 type PropsDisplaySelect = {

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { css } from "@emotion/react"
 
 
 type Props = JSX.IntrinsicElements["button"] & {
@@ -15,7 +15,7 @@ type Props = JSX.IntrinsicElements["button"] & {
 }
 
 export const Button = (props:Props) => {
-    const {children, variant='basic', ...buttonProps} = props;
+    const {children, variant='basic', ...buttonProps} = props
     return (
         <button
             style={{width: props.width, height:props.height}}
@@ -40,7 +40,7 @@ const base = css({
     border: 'none',
     color: '#fff',
     cursor:'pointer'
-});
+})
 
 const variants = {
     basic: css(base),

@@ -2,7 +2,7 @@ import Head from "next/head"
 
 type Props = {
     title?: string
-};
+}
 export const GlobalHeader = (props: Props) => {
     return (
         <Head>

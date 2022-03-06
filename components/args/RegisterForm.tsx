@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { css } from "@emotion/react"
 import { Button } from "@/components/atoms/Button"
 //utility
 import * as style_utility from '@/styles/utility/utility'
@@ -9,10 +9,10 @@ type Props = JSX.IntrinsicElements["button"] & {
     handleSubmit: (submit:any) => void,
     deleteQuestion: ()=>void,
     register: (text:string, {required: boolean}) => void
-};
+}
 
 export const ButtonGroupAdmin = (props:Props) => {
-    const {...buttonProps} = props;
+    const {...buttonProps} = props
     return (
         <div css={style_utility.mb30}>
             <form onSubmit={props.handleSubmit}>

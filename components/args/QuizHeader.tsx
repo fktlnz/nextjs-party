@@ -5,7 +5,7 @@ import * as style_utility from "@/styles/utility/utility"
 type Props = {
     step: number,
     question: string
-};
+}
 export const QuizHeader = (props: Props) => {
     return (
         <section css={(props.step>=1) ? [TitleWrap, style_utility.mb20]:style_utility.display_none}>

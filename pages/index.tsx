@@ -1,43 +1,43 @@
 /** @jsxImportSource @emotion/react */
-import React, {useState, useEffect} from "react";
-import type { NextPage } from 'next';
+import React, {useState, useEffect} from "react"
+import type { NextPage } from 'next'
 // service
-import useSocket from '../service/useSocket';
+import useSocket from '../service/useSocket'
 //component
-import { IndexTemplate } from "@/components/template/Template";
+import { IndexTemplate } from "@/components/template/Template"
 import {ButtonGroup} from '@/components/mols/ButtonGroup'
 import { SubmitForm } from "@/components/mols/SubmitForm"
 
 const Home:NextPage = () => {
 
-    const {id, step, countUpVote, sendMessage} = useSocket();
-    const [questionText, setQuestionText] = useState<string>("");
-    const [message, setMessage] = useState<string>("");
+    const {id, step, countUpVote, sendMessage} = useSocket()
+    const [questionText, setQuestionText] = useState<string>("")
+    const [message, setMessage] = useState<string>("")
 
     useEffect(() => {
         if(step==0){
-            setQuestionText("問題発表までおまちください・・");
+            setQuestionText("問題発表までおまちください・・")
         }else if(step==1) {
-            console.log('display title');
+            console.log('display title')
             getQuestionById(id)
             .then(question => {
-                console.log('question data!!:', question);
+                console.log('question data!!:', question)
                 setQuestionText(question.question)
             })
             .catch((error) => {
-                console.error('get question error!!:', error);
-            });
+                console.error('get question error!!:', error)
+            })
         }else if(step==2) {
-            console.log('display selection');
+            console.log('display selection')
         }else if(step==3) {
-            console.log('answer check');
+            console.log('answer check')
         }else if(step==4) {
-            console.log('display answer');
+            console.log('display answer')
         }else if(step==5) {
-            console.log('display end');
+            console.log('display end')
         }
            
-    },[id, step]);
+    },[id, step])
 
     const getQuestionById = async (id: number) => {
         const data = {
@@ -49,9 +49,9 @@ const Home:NextPage = () => {
             'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-        });
-        const question = await res.json();
-        return question.shift();
+        })
+        const question = await res.json()
+        return question.shift()
     }
 
     const countUp = (index:number) => {
@@ -59,9 +59,9 @@ const Home:NextPage = () => {
     }
 
     const handleSubmitMessage = () => {
-        console.log(message);
-        sendMessage(message);
-        setMessage("");
+        console.log(message)
+        sendMessage(message)
+        setMessage("")
     }
 
     const handleChangeMessage = (e:React.ChangeEvent<HTMLInputElement>) => {
