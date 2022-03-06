@@ -38,7 +38,7 @@ type PropsDisplayImg = {
     url: string
 }
 
-export default function BasicTable(props:TableDatas) {
+export const QuizTable = (props:TableDatas) => {
     const DisplayImg:React.VFC<PropsDisplayImg>= (props) => {
         if(props.isRead) {
             return(

@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from "react"
 import type { NextPage } from 'next'
 // service
-import useSocket from '../service/useSocket'
+import useSocket from '@/service/useSocket'
 //component
 import { IndexTemplate } from "@/components/template/Template"
 import {ButtonGroup} from '@/components/mols/ButtonGroup'

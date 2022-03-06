@@ -4,8 +4,8 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 // service
-import useSocket from '../service/useSocket'
-import useCount from '../service/useCount'
+import useSocket from '@/service/useSocket'
+import useCount from '@/service/useCount'
 // Styles
 import * as style_utility from '../styles/utility/utility'
 // Sound

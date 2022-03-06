@@ -2,11 +2,11 @@
 import React, {useState} from "react"
 import type { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
-import Table from '../components/common/table'
+import { QuizTable } from '@/components/args/QuizTable'
 // Socket
-import useSocket from '../service/useSocket'
+import useSocket from '@/service/useSocket'
 // Styles
-import * as style_utility from '../styles/utility/utility'
+import * as style_utility from '@/styles/utility/utility'
 // Form
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AdminTemplate } from "@/components/template/Template"
@@ -28,17 +28,6 @@ type TableData = {
     answer:string
 }
 
-type TableDatas = {
-    rows:TableData[]
-}
-
-type imgPath = {
-    img_path1: string,
-    img_path2: string,
-    img_path3: string,
-    img_path4: string,
-}
-
 type IFormInputs = {
   question: string,
   select1: string,
@@ -46,10 +35,6 @@ type IFormInputs = {
   select3: string,
   select4: string,
   answer: string
-}
-
-type ButtonProps = {
-    step: Number
 }
 
 const DISPLAY_TITLE_EVENT = "displayTitleEvent"
@@ -297,7 +282,7 @@ const Home:NextPage = ({data}:any) => {
             <RegisterForm onSubmit={onSubmit} />        
             <ButtonGroupAdmin onClickDisplay={display} deleteQuestion={deleteQuestion} />
             <div>
-                <Table rows={rowsdata} onChangeRadio={onChangeRadio} handleUploadPhoto={handleUploadPhoto}></Table>
+                <QuizTable rows={rowsdata} onChangeRadio={onChangeRadio} handleUploadPhoto={handleUploadPhoto}></QuizTable>
                 <button css={style_utility.float_right} onClick={() => resetTable()}>テーブルリセット</button>
             </div>
         </AdminTemplate>

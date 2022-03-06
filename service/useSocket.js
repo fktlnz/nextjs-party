@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
 // service
-import useComment from '../service/useComment';
+import useComment from '@/service/useComment';
 
 const DISPLAY_TITLE_EVENT = "displayTitleEvent"; // Name of the event
 const DISPLAY_SELECTION_EVENT = "displaySelectionEvent"; // Name of the event
