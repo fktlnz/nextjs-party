@@ -7,7 +7,6 @@ import Image from 'next/image'
 import useSocket from '../service/useSocket'
 import useCount from '../service/useCount'
 // Styles
-import * as style_quiz from '../styles/project/quiz'
 import * as style_utility from '../styles/utility/utility'
 // Sound
 import useSound from 'use-sound'
@@ -27,43 +26,6 @@ type TableData = {
     select4_text:string,
     select4_imgpath:string,
     answer:string
-}
-
-type TableDatas = {
-    rows:TableData[]
-}
-
-type imgPath = {
-    img_path1: string,
-    img_path2: string,
-    img_path3: string,
-    img_path4: string,
-}
-
-type IFormInputs = {
-  question: string,
-  select1: string,
-  select2: string,
-  select3: string,
-  select4: string,
-  answer: string
-}
-
-type PropsDisplaySelect = {
-    hasImg: boolean,
-    imgPath: string,
-    text: string
-}
-
-const DisplaySelect:React.VFC<PropsDisplaySelect>= (props) => {
-    if(props.hasImg) {
-        return(
-            <Image src={props.imgPath} layout="fill" objectFit="contain" />
-        )
-    }
-    return (
-        <h2>{props.text}</h2>
-    )
 }
 
 const Home:NextPage = () => {
@@ -122,68 +84,6 @@ const Home:NextPage = () => {
         }
         
     },[step, isTimerEnd])
-    // 問題新規保存
-    const saveQuestion = async (input:IFormInputs) => {
-        const data = {
-            question: input.question,
-            select1_text:input.select1,
-            select1_imgpath:"",
-            select2_text:input.select2,
-            select2_imgpath:"",
-            select3_text:input.select3,
-            select3_imgpath:"",
-            select4_text:input.select4,
-            select4_imgpath:"",
-            answer:input.answer
-        }
-        await fetch(`/api/questions/create`, {
-            method: 'POST', // or 'PUT'
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Save Data!!:', data)
-            
-        })
-        .catch((error) => {
-            console.error('Save Error!!:', error)
-        })
-    }
-    // DBを更新
-    const updateQuestion = async (tableData:TableData) => {
-        const data = {
-            id: tableData.id,
-            question: tableData.question,
-            select1_text:tableData.select1_text,
-            select1_imgpath:tableData.select1_imgpath,
-            select2_text:tableData.select2_text,
-            select2_imgpath:tableData.select2_imgpath,
-            select3_text:tableData.select3_text,
-            select3_imgpath:tableData.select3_imgpath,
-            select4_text:tableData.select4_text,
-            select4_imgpath:tableData.select4_imgpath,
-            answer:tableData.answer
-        }
-        await fetch(`/api/questions/update`, {
-            method: 'POST', // or 'PUT'
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Update Data!!:', data)
-            
-        })
-        .catch((error) => {
-            console.error('Update Error!!:', error)
-        })
-
-    }
 
     const getQuestionById = async (id: number) => {
         const data = {

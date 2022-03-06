@@ -21,7 +21,7 @@ export const IndexTemplate = (props: PropsIndex) => {
         <div>
             <GlobalHeader />
             <main css={mainContainer}>
-                <div className="txt-center">
+                <div css={style_utility.text_center}>
                     <Image src="/img/party.png" width={150} height={150}/>
                 </div>
                 <p css={[questionTitle, style_utility.mb30]}>{props.text}</p>

@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react'
 import { css } from '@emotion/react'
 import * as style_utility from '@/styles/utility/utility'
 import { useFormContext, RegisterOptions, get } from "react-hook-form"

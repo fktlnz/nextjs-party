@@ -7,13 +7,10 @@ import Table from '../components/common/table'
 import useSocket from '../service/useSocket'
 // Styles
 import * as style_utility from '../styles/utility/utility'
-import * as style_btn from '../styles/components/sbtn'
-import styles_util from '../styles/Utility.module.css'
 // Form
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
 import { AdminTemplate } from "@/components/template/Template"
 import { ButtonGroupAdmin } from "@/components/mols/ButtonGroupAdmin"
-import { InputText } from "@/components/atoms/InputText"
 import { RegisterForm } from "@/components/args/RegisterForm"
 
 
@@ -62,17 +59,9 @@ const DISPLAY_ANSWER_EVENT = "displayAnswerEvent"
 const DISPLAY_END = 'displayEnd' 
 
 const Home:NextPage = ({data}:any) => {
-    const [hasError, setHasError] = useState<boolean>(false)
-    const [question, setQuestion] = useState("")
-    const [select1, setSelect1] = useState("")
-    const [select2, setSelect2] = useState("")
-    const [select3, setSelect3] = useState("")
-    const [select4, setSelect4] = useState("")
-    const [answer, setAnswer] = useState("")
     const [rowsdata, setRowsData] = useState<TableData[]>(data)
     const [row, setRow] = React.useState("0")
-    const [imgPaths, setImgPaths] = React.useState([])
-    const {id, step, sendStep, enableVote, resetVote} = useSocket()
+    const {sendStep, enableVote, resetVote} = useSocket()
 
     // react-hook-form
     const methods = useForm<IFormInputs>({

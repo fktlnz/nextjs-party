@@ -5,8 +5,6 @@ import _ from "lodash"
 
 // 各チャットルームのメッセージ保持、メッセージブロードキャスト
 const useComment = () => {
-    const [timeStart, setTimeStart] = useState(10)
-
     const run = (comment: string) => {
       createDom(comment)
       .then(setStyle)

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
 import { Button } from "@/components/atoms/Button"
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form"
+import { useForm, FormProvider } from "react-hook-form"
 import { InputText } from "../atoms/InputText"
 
 //utility

@@ -44,39 +44,39 @@ export const QuizMain = (props: Props) => {
     return (
         <div>
             <section css={(props.step>=2) ? CardsWrap : style_utility.display_none}>
-                <div className="border-primary" css={(props.step>=4 && props.data.answer=="1") ? [CardWrap, style_utility.mb30, CorrectShadow]:[CardWrap, style_utility.mb30]}>
+                <div css={(props.step>=4 && props.data.answer=="1") ? [CardWrapPrimary, style_utility.mb30, CorrectShadow]:[CardWrapPrimary, style_utility.mb30]}>
                     <div css={CardTop}>
                         <DisplaySelect hasImg={(props.data.select1_imgpath!="")} imgPath={props.data.select1_imgpath} text={props.data.select1_text}/>
                     </div>
-                    <div className="border-top-primary" css={CardBottom}>
-                        <span className="bg-primary" css={CardBottomLabel}>A</span>
+                    <div css={CardBottomPrimary}>
+                        <span css={CardBottomLabelPrimary}>A</span>
                         <span css={(props.step>=3) ? CardBottomCount : style_utility.display_none}>{props.voteResult[0]}</span>
                     </div>
                 </div>
-                <div className="border-danger" css={(props.step>=4 && props.data.answer=="2") ? [CardWrap, style_utility.mb30, CorrectShadow]:[CardWrap, style_utility.mb30]}>
+                <div css={(props.step>=4 && props.data.answer=="2") ? [CardWrapDanger, style_utility.mb30, CorrectShadow]:[CardWrapDanger, style_utility.mb30]}>
                     <div css={CardTop}>
                     <DisplaySelect hasImg={(props.data.select2_imgpath!="")} imgPath={props.data.select2_imgpath} text={props.data.select2_text}/>
                     </div>
-                    <div className="border-top-danger" css={CardBottom}>
-                        <span className="bg-danger" css={CardBottomLabel}>B</span>
+                    <div css={CardBottomDanger}>
+                        <span css={CardBottomLabelDanger}>B</span>
                         <span css={(props.step>=3) ? CardBottomCount : style_utility.display_none}>{props.voteResult[1]}</span>
                     </div>
                 </div>
-                <div className="border-success" css={(props.step>=4 && props.data.answer=="3") ? [CardWrap, style_utility.mb10, CorrectShadow]:[CardWrap, style_utility.mb10]}>
+                <div css={(props.step>=4 && props.data.answer=="3") ? [CardWrapSuccess, style_utility.mb10, CorrectShadow]:[CardWrapSuccess, style_utility.mb10]}>
                     <div css={CardTop}>
                     <DisplaySelect hasImg={(props.data.select3_imgpath!="")} imgPath={props.data.select3_imgpath} text={props.data.select3_text}/>
                     </div>
-                    <div className="border-top-success" css={CardBottom}>
-                        <span className="bg-success" css={CardBottomLabel}>C</span>
+                    <div css={CardBottomSuccess}>
+                        <span css={CardBottomLabelSuccess}>C</span>
                         <span css={(props.step>=3) ? CardBottomCount : style_utility.display_none}>{props.voteResult[2]}</span>
                     </div>
                 </div>
-                <div className="border-warning" css={(props.step>=4 && props.data.answer=="4") ? [CardWrap, style_utility.mb10, CorrectShadow]:[CardWrap, style_utility.mb10]}>
+                <div css={(props.step>=4 && props.data.answer=="4") ? [CardWrapWarning, style_utility.mb10, CorrectShadow]:[CardWrapWarning, style_utility.mb10]}>
                     <div css={CardTop}>
                     <DisplaySelect hasImg={(props.data.select4_imgpath!="")} imgPath={props.data.select4_imgpath} text={props.data.select4_text}/>
                     </div>
-                    <div className="border-top-warning" css={CardBottom}>
-                        <span className="bg-warning" css={CardBottomLabel}>D</span>
+                    <div css={CardBottomWarning}>
+                        <span css={CardBottomLabelWarning}>D</span>
                         <span css={(props.step>=3) ? CardBottomCount : style_utility.display_none}>{props.voteResult[3]}</span>
                     </div>
                 </div>
@@ -85,45 +85,7 @@ export const QuizMain = (props: Props) => {
                 <span css={TimeCount}>{props.count}</span>
             </div>
             <style jsx>{`
-                .reset-table {
-                    float:right;
-                }
-                .border-top-primary {
-                    border-top: 3px solid #527FC2 !important;
-                }
-                .border-top-danger {
-                    border-top: 3px solid #C25252 !important;
-                }
-                .border-top-success {
-                    border-top: 3px solid #52C256 !important;
-                }
-                .border-top-warning {
-                    border-top: 3px solid #C2B752 !important;
-                }
-                .border-primary {
-                    border: 3px solid #527FC2 !important;
-                }
-                .border-danger {
-                    border: 3px solid #C25252 !important;
-                }
-                .border-success {
-                    border: 3px solid #52C256 !important;
-                }
-                .border-warning {
-                    border: 3px solid #C2B752 !important;
-                }
-                .bg-primary {
-                    background-color: #527FC2;
-                }
-                .bg-danger {
-                    background-color: #C25252;
-                }
-                .bg-success {
-                    background-color: #52C256;
-                }
-                .bg-warning {
-                    background-color: #C2B752;
-                }
+                
             `}</style>
         </div>
     )
@@ -139,6 +101,19 @@ const CardWrap = css({
     width: '49%',
     borderRadius: 10,
     fontSize: 20
+})
+
+const CardWrapPrimary = css(CardWrap, {
+    border: "3px solid #527FC2 !important"
+})
+const CardWrapDanger = css(CardWrap, {
+    border: "3px solid #C25252 !important"
+})
+const CardWrapSuccess = css(CardWrap, {
+    border: "3px solid #52C256 !important"
+})
+const CardWrapWarning = css(CardWrap, {
+    border: "3px solid #C2B752 !important"
 })
 
 const CardTop = css({
@@ -166,6 +141,19 @@ const CardBottom = css({
     justifyContent: "space-between"
 })
 
+const CardBottomPrimary = css(CardBottom,{
+    borderTop: "3px solid #527FC2 !important"
+})
+const CardBottomDanger = css(CardBottom,{
+    borderTop: "3px solid #C25252 !important"
+})
+const CardBottomSuccess = css(CardBottom,{
+    borderTop: "3px solid #52C256 !important"
+})
+const CardBottomWarning = css(CardBottom,{
+    borderTop: "3px solid #C2B752 !important"
+})
+
 const CardBottomLabel = css({
     display: "inline-block",
     borderRadius: "50%",
@@ -175,6 +163,19 @@ const CardBottomLabel = css({
     height: 50,
     color: "white",
     fontSize: 28
+})
+
+const CardBottomLabelPrimary = css(CardBottomLabel, {
+    backgroundColor: "#527FC2"
+})
+const CardBottomLabelDanger = css(CardBottomLabel, {
+    backgroundColor: "#C25252"
+})
+const CardBottomLabelSuccess = css(CardBottomLabel, {
+    backgroundColor: "#52C256"
+})
+const CardBottomLabelWarning = css(CardBottomLabel, {
+    backgroundColor: "#C2B752"
 })
 
 const CardBottomCount = css({
