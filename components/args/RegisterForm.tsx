@@ -1,32 +1,92 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
 import { Button } from "@/components/atoms/Button"
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form"
+import { InputText } from "../atoms/InputText"
+
 //utility
 import * as style_utility from '@/styles/utility/utility'
 
-
-type Props = JSX.IntrinsicElements["button"] & {
-    handleSubmit: (submit:any) => void,
-    deleteQuestion: ()=>void,
-    register: (text:string, {required: boolean}) => void
+type IFormInputs = {
+  question: string,
+  select1: string,
+  select2: string,
+  select3: string,
+  select4: string,
+  answer: string
 }
 
-export const ButtonGroupAdmin = (props:Props) => {
-    const {...buttonProps} = props
+type Props = {
+    onSubmit: (input: IFormInputs) => void
+}
+
+export const RegisterForm = (props:Props) => {
+    const methods = useForm<IFormInputs>({
+        mode: "onChange",
+        criteriaMode: "all",
+        shouldFocusError: false
+    })
+    
     return (
-        <div css={style_utility.mb30}>
-            <form onSubmit={props.handleSubmit}>
-                <input {...props.register("question", {required: true})} css={style_utility.mb10} css={[(errors.question ? style_utility.border_warning : ""), style_utility.mb10]} type="text" placeholder="問題文を入力してください"/>
-                <input {...props.register("select1", {required: true})} css={style_utility.mb10} css={(errors.select1 ? style_utility.border_warning : "")} type="text" placeholder="選択肢１を入力してください"/>
-                <input {...props.register("select2", {required: true})} css={style_utility.mb10} css={(errors.select2 ? style_utility.border_warning : "")} type="text" placeholder="選択肢２を入力してください"/>
-                <input {...props.register("select3", {required: true})} css={style_utility.mb10} css={(errors.select3 ? style_utility.border_warning : "")} type="text" placeholder="選択肢３を入力してください"/>
-                <input {...props.register("select4", {required: true})} css={style_utility.mb10} css={(errors.select4 ? style_utility.border_warning : "")} type="text" placeholder="選択肢４を入力してください"/>
-                <div css={style_utility.mb10}>
-                    <input {...register("answer", { pattern: /[1-4]/ , required:true, min:1, max:4})} css={(errors.answer ? style_utility.border_warning : "")} type="text" placeholder="解答を入力してください(1-4)"/>
-                    <p css={style_utility.text_warning}>{(errors.answer?.type=="max" || errors.answer?.type=="min" || errors.answer?.type=="pattern")  && "1-4で入力してください"}</p>
-                </div>
-                <button css={style_btn.StyleBtn} type="submit">作成</button>
-            </form>
-        </div>
+        <section css={style_utility.mb30}>
+            <FormProvider {...methods}>
+                <form onSubmit={methods.handleSubmit(props.onSubmit)}>
+                    <InputText
+                        name="question"
+                        css={style_utility.mb10}
+                        placeholder="問題文を入力してください"
+                        registerOptions={{
+                            required: true
+                        }}
+                    />
+                    <InputText
+                        name="select1"
+                        css={style_utility.mb10}
+                        placeholder="選択肢１を入力してください"
+                        registerOptions={{
+                            required: true
+                        }}
+                    />
+                    <InputText
+                        name="select2"
+                        css={style_utility.mb10}
+                        placeholder="選択肢２を入力してください"
+                        registerOptions={{
+                            required: true
+                        }}
+                    />
+                    <InputText
+                        name="select3"
+                        css={style_utility.mb10}
+                        placeholder="選択肢３を入力してください"
+                        registerOptions={{
+                            required: true
+                        }}
+                    />
+                    <InputText
+                        name="select4"
+                        css={style_utility.mb10}
+                        placeholder="選択肢４を入力してください"
+                        registerOptions={{
+                            required: true
+                        }}
+                    />
+                    <div css={style_utility.mb10}>
+                        <InputText
+                            name="answer"
+                            placeholder="解答を入力してください(1-4)"
+                            registerOptions={{
+                                required: true,
+                                pattern: /[1-4]/,
+                                min: 1,
+                                max: 4
+                            }}
+                        />
+                        <p css={style_utility.text_warning}>{(methods.formState.errors.answer?.type=="max" || methods.formState.errors.answer?.type=="min" || methods.formState.errors.answer?.type=="pattern")  && "1-4で入力してください"}</p>
+                    </div>
+                    <Button type="submit">作成</Button>
+                </form>
+            </FormProvider>
+        </section>
     )
 }

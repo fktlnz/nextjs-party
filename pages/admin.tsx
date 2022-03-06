@@ -2,25 +2,19 @@
 import React, {useState} from "react"
 import type { NextPage } from 'next'
 import { GetServerSideProps } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import { css, jsx } from '@emotion/react'
-import {Button, PrimaryButton, SuccessButton, WarningButton, DangerButton} from '../components/common/cbtn'
-import Footer from '../components/footer'
 import Table from '../components/common/table'
 // Socket
 import useSocket from '../service/useSocket'
 // Styles
 import * as style_utility from '../styles/utility/utility'
 import * as style_btn from '../styles/components/sbtn'
-import styles_admin from '../styles/Admin.module.css'
 import styles_util from '../styles/Utility.module.css'
 // Form
-import { useForm, SubmitHandler } from "react-hook-form"
-import { styleReset } from "../styles/foundation/reset"
-import { update } from "../server/db"
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form"
 import { AdminTemplate } from "@/components/template/Template"
 import { ButtonGroupAdmin } from "@/components/mols/ButtonGroupAdmin"
+import { InputText } from "@/components/atoms/InputText"
+import { RegisterForm } from "@/components/args/RegisterForm"
 
 
 type TableData = {
@@ -81,19 +75,21 @@ const Home:NextPage = ({data}:any) => {
     const {id, step, sendStep, enableVote, resetVote} = useSocket()
 
     // react-hook-form
-    const { register, formState: { errors }, handleSubmit, reset } = useForm<IFormInputs>({
+    const methods = useForm<IFormInputs>({
         mode: "onChange",
         criteriaMode: "all",
-        shouldFocusError: false,
+        shouldFocusError: false
     })
     const onSubmit: SubmitHandler<IFormInputs> = async input => {
         console.log(input)
-        if(errors.answer){
+        if(methods.formState.errors.answer){
             console.log('answer error')
             return
         }
 
         if(!input.question || !input.select1 || !input.select2 || !input.select3 || !input.select4 || !input.answer) {
+            console.log("errors")
+            console.log(methods.formState.errors)
             return
         }
         // 問題新規登録
@@ -102,7 +98,7 @@ const Home:NextPage = ({data}:any) => {
         updateTable()
 
         // Form Reset
-        reset()
+        methods.reset()
     }
 
     // 問題新規保存
@@ -309,36 +305,13 @@ const Home:NextPage = ({data}:any) => {
 
     return (
         <AdminTemplate>
-            
-            <div css={style_utility.mb30}>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <input {...register("question", {required: true})} className={styles_util.u_mb10} css={(errors.question ? style_utility.border_warning : "")} type="text" placeholder="問題文を入力してください"/>
-                    <input {...register("select1", {required: true})} className={styles_util.u_mb10} css={(errors.select1 ? style_utility.border_warning : "")} type="text" placeholder="選択肢１を入力してください"/>
-                    <input {...register("select2", {required: true})} className={styles_util.u_mb10} css={(errors.select2 ? style_utility.border_warning : "")} type="text" placeholder="選択肢２を入力してください"/>
-                    <input {...register("select3", {required: true})} className={styles_util.u_mb10} css={(errors.select3 ? style_utility.border_warning : "")} type="text" placeholder="選択肢３を入力してください"/>
-                    <input {...register("select4", {required: true})} className={styles_util.u_mb10} css={(errors.select4 ? style_utility.border_warning : "")} type="text" placeholder="選択肢４を入力してください"/>
-                    <div css={style_utility.mb10}>
-                        <input {...register("answer", { pattern: /[1-4]/ , required:true, min:1, max:4})} css={(errors.answer ? style_utility.border_warning : "")} type="text" placeholder="解答を入力してください(1-4)"/>
-                        <p css={style_utility.text_warning}>{(errors.answer?.type=="max" || errors.answer?.type=="min" || errors.answer?.type=="pattern")  && "1-4で入力してください"}</p>
-                    </div>
-                    <button css={style_btn.StyleBtn} type="submit">作成</button>
-                </form>
-            </div>
+            <RegisterForm onSubmit={onSubmit} />        
             <ButtonGroupAdmin onClickDisplay={display} deleteQuestion={deleteQuestion} />
             <div>
                 <Table rows={rowsdata} onChangeRadio={onChangeRadio} handleUploadPhoto={handleUploadPhoto}></Table>
-                <button className="reset-table" onClick={() => resetTable()}>テーブルリセット</button>
+                <button css={style_utility.float_right} onClick={() => resetTable()}>テーブルリセット</button>
             </div>
- 
-            <style jsx>{`
-                .reset-table {
-                    float:right;
-                }
-            `}</style>
         </AdminTemplate>
-        
-
-        
     )
 }
 
